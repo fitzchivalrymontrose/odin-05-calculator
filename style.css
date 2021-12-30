@@ -5,7 +5,7 @@
 }
 
 body {
-    background-color: lightslategray;
+    background-color: darkslateblue;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,11 +19,11 @@ header {
     flex-direction: column;
     justify-content: center;
     margin: .5em;
-    padding: .5em 2em;
-    background-color: lightsteelblue;
+    padding: .1em 2.6em;
+    background-color: slateblue;
     width: max-content;
-    border: 2px solid orangered;
-    border-radius: 5%;
+    border: 2px solid lightslategray;
+    border-radius: 10px;
 }
 
 header h1 {
@@ -35,19 +35,52 @@ header p {
 }
 
 .main-container {
-
+    display: flex;
+    justify-content: center;
+    /* border: 2px solid red; */
+    min-width: 600px;
+    height: 75vh;
 }
 
 .calculator {
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 70%;
+    background-color: lightslategray;
+    border: 2px solid slateblue;
+    border-radius: 10px;
+    padding: .5em 0 .5em 0;
+    gap: .5em;
 }
 
 .display {
+    width: 95%;
+    height: 30%;
+    background-color: black;
+    border-radius: 10px;
+    border: 2px solid darkslateblue;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
 
+.display p {
+    color: chartreuse;
+    padding: .3em;
+    font-size: 30px;
 }
 
 .buttons {
-
+    flex: 1;
+    width: 95%;
+    height: 60%;
+    background-color: slateblue;
+    border: 2px solid darkslateblue;
+    border-radius: 10px;
 }
 
 .numpad {
