@@ -23,7 +23,13 @@ function divideBtn(a, b) {
     return a / b;
 }
 
+const displayText = document.querySelector('.display-text');
+
 let TOTAL = 0;
+let firstNum = 0;
+let secondNum = 0;
+let currentNum = 0;
+
 
 function operate(operator, a, b) {
     // choose operator function
@@ -36,4 +42,8 @@ function operate(operator, a, b) {
     // do operation, display result, if more input, use result as
     // first of two arguments of the next operation,
     // do the same thing again, operate, display, update? running total
+}
+
+function clearBtn() {
+
 }
