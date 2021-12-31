@@ -24,11 +24,28 @@ function divideBtn(a, b) {
 }
 
 const displayText = document.querySelector('.display-text');
-
 let TOTAL = 0;
 let firstNum = 0;
 let secondNum = 0;
 let currentNum = 0;
+let operator;
+
+displayText.textContent = 0;
+
+const squares = document.querySelectorAll('button');
+squares.forEach(square => {
+    square.addEventListener('click', handleClick);
+});
+
+function handleClick(e) {
+    console.log(e.target.parentElement.classList);
+    if (displayText.textContent == 0) {
+        displayText.textContent = e.target.textContent;
+    }
+    else {
+        displayText.textContent += e.target.textContent;
+    }
+}
 
 
 function operate(operator, a, b) {
