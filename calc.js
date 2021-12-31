@@ -38,12 +38,33 @@ squares.forEach(square => {
 });
 
 function handleClick(e) {
+    
     console.log(e.target.parentElement.classList);
     if (displayText.textContent == 0) {
         displayText.textContent = e.target.textContent;
     }
     else {
         displayText.textContent += e.target.textContent;
+    }
+    switch (e.target.parentElement.classList) {
+        case '1-btn':
+        case '2-btn':
+        case '3-btn':
+        case '4-btn':
+        case '5-btn':
+        case '6-btn':
+        case '7-btn':
+        case '8-btn':
+        case '9-btn':
+        case '0-btn':
+        
+        case 'add-btn':
+        case 'subtract-btn':
+        case 'mutilply-btn':
+        case 'divid-btn':
+        
+        case 'equals-btn':
+        case 'clear-btn':
     }
 }
 
