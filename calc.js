@@ -39,14 +39,9 @@ squares.forEach(square => {
 
 function handleClick(e) {
     
-    console.log(e.target.parentElement.classList);
-    if (displayText.textContent == 0) {
-        displayText.textContent = e.target.textContent;
-    }
-    else {
-        displayText.textContent += e.target.textContent;
-    }
-    switch (e.target.parentElement.classList) {
+    console.log(e.target.parentElement.id);
+    updateDisplay(e.target.textContent);
+    switch (e.target.parentElement.id) {
         case '1-btn':
         case '2-btn':
         case '3-btn':
@@ -68,6 +63,14 @@ function handleClick(e) {
     }
 }
 
+function updateDisplay(text) {
+    if (displayText.textContent == 0) {
+        displayText.textContent = text;
+    }
+    else {
+        displayText.textContent += text;
+    }
+}
 
 function operate(operator, a, b) {
     // choose operator function
