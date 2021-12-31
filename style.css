@@ -76,15 +76,16 @@ header p {
 }
 
 .buttons {
-    flex: 1;
+    
     /* width: 45%;
     height: 60%; */
     background-color: slateblue;
     border: 2px solid darkslateblue;
     border-radius: 10px;
     display: flex;
-    
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1em;
 
 }
 
@@ -96,6 +97,10 @@ button {
 .numpad {
     display: flex;
     flex-wrap: wrap;
+    padding: .5em;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
 }
 
 .calc-functions {
