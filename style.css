@@ -92,7 +92,20 @@ header p {
 button {
     width: 90px;
     height: 90px;
+    background-color: powderblue;
+    border-radius: 10px;
+    border: 3px solid slateblue;
 }
+
+/* .clear-btn {
+    width: 180px;
+    height: 90px;
+}
+
+.equals-btn {
+    width: 180px;
+    height: 90px;
+} */
 
 .numpad {
     display: flex;
