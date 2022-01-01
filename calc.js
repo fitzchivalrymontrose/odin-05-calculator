@@ -28,7 +28,8 @@ let total = 0;
 let firstNum = 0;
 let secondNum = 0;
 let currentDigit = 0;
-let operator;
+let operator = '';
+let lastButtonType = '';
 
 displayText.textContent = 0;
 const digits = [];
@@ -47,12 +48,14 @@ function handleClick(e) {
     
     switch (e.target.classList.value) {
         case 'num-btn':
+            lastButtonType = 'numb';
             // add digit to number
             digits.push(e.target.textContent);
             console.log(digits); 
             break;
             // add digit to display
         case 'op-btn':
+            lastButtonType = 'op';
             // set operator
             switch(e.target.id) {
                 case 'add-btn':
@@ -83,7 +86,9 @@ function handleClick(e) {
         case 'func-btn':
             switch (e.target.id) {
                 case 'equals-btn':
+                    lastButtonType = 'equal';
                 case 'clear-btn':
+                    lastButtonType = 'clear';
                     displayText.textContent = '0';
                     firstNum = 0;
                     secondNum = 0;
@@ -91,6 +96,7 @@ function handleClick(e) {
                     operator = '';
                     break;
                 case 'back-btn':
+                    lastButtonType = 'back';
             }
     }
     console.log(operator);
