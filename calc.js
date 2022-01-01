@@ -27,7 +27,7 @@ const displayText = document.querySelector('.display-text');
 let TOTAL = 0;
 let firstNum = 0;
 let secondNum = 0;
-let currentNum = 0;
+let currentDigit = 0;
 let operator;
 
 displayText.textContent = 0;
@@ -39,9 +39,12 @@ squares.forEach(square => {
 
 function handleClick(e) {
     
-    console.log(e.target.parentElement.id);
+    console.log(e.target.id);
+    console.log(e.target.classList.value);
+
     updateDisplay(e.target.textContent);
-    switch (e.target.parentElement.id) {
+    
+    switch (e.target.id) {
         case '1-btn':
         case '2-btn':
         case '3-btn':
