@@ -1,26 +1,17 @@
-// Your calculator is going to contain functions for all of the basic math operators you typically find on simple calculators, so start by creating functions for the following items and testing them in your browser’s console.
-
-//     add
-//     subtract
-//     multiply
-//     divide
-
-// Create a new function operate that takes an operator and 2 numbers and then calls one of the above functions on the numbers.
-
 function addBtn(a, b) {
-    return a + b;
+    return parseFloat(a) + parseFloat(b);
 }
 
 function subtractBtn(a, b) {
-    return a - b;
+    return parseFloat(a) - parseFloat(b);
 }
 
 function multiplyBtn(a, b) {
-    return a * b;
+    return parseFloat(a) * parseFloat(b);
 }
 
 function divideBtn(a, b) {
-    return a / b;
+    return parseFloat(a) / parseFloat(b);
 }
 
 const displayText = document.querySelector('.display-text');
@@ -75,8 +66,31 @@ function handleClick(e) {
                     break;
             }
             // save current digit list to number variable .join()           
-            firstNum = digits.join('');
-            console.log(firstNum);
+            if (firstNum == 0) {
+                firstNum = digits.join('');
+                console.log(firstNum, secondNum);
+            }
+            else {
+                if (secondNum == 0) {
+                    secondNum = digits.join('');
+                    total = operate(operator, firstNum, secondNum);
+                    displayText.textContent = total;
+                    firstNum = total;
+                    secondNum = 0;
+                    console.log(firstNum, secondNum);
+                }
+                else {
+                    total = operate(operator, firstNum, secondNum);
+                    displayText.textContent = total;
+                    firstNum = total;
+                    secondNum = 0;
+                    console.log(firstNum, secondNum, total);
+
+                }
+                
+
+            }
+            
             // reset digit list
             digits.length = 0;
             break;
@@ -88,6 +102,11 @@ function handleClick(e) {
             switch (e.target.id) {
                 case 'equals-btn':
                     lastButtonType = 'equal';
+
+                    // run operation with current numbers and operation
+                    total = operate(operator, firstNum, secondNum);
+                    displayText.textContent = total;
+                    console.log(firstNum, secondNum, total)
                     break;
                 case 'clear-btn':
                     lastButtonType = 'clear';
@@ -125,6 +144,25 @@ function updateDisplay(text) {
 
 function operate(operator, a, b) {
     // choose operator function
+    let sum;
+    switch (operator) {
+        case 'addition':
+            sum = addBtn(a, b);
+            displayText.textContent = sum;
+            return sum;
+        case 'subtraction':
+            sum = subtractBtn(a, b);
+            displayText.textContent = sum;
+            return sum;
+        case 'multiplication':
+            sum = multiplyBtn(a, b);
+            displayText.textContent = sum;
+            return sum;
+        case 'division':
+            sum = divideBtn(a, b);
+            displayText.textContent = sum;
+            return sum;
+    }
     // pass a and b to said function
     // return result
 
