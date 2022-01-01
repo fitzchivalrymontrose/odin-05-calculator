@@ -44,10 +44,11 @@ function handleClick(e) {
     console.log(e.target.id);
     console.log(e.target.classList.value);
 
-    updateDisplay(e.target.textContent);
+    
     
     switch (e.target.classList.value) {
         case 'num-btn':
+            updateDisplay(e.target.textContent);
             lastButtonType = 'numb';
             // add digit to number
             digits.push(e.target.textContent);
@@ -87,6 +88,7 @@ function handleClick(e) {
             switch (e.target.id) {
                 case 'equals-btn':
                     lastButtonType = 'equal';
+                    break;
                 case 'clear-btn':
                     lastButtonType = 'clear';
                     displayText.textContent = '0';
@@ -97,6 +99,16 @@ function handleClick(e) {
                     break;
                 case 'back-btn':
                     lastButtonType = 'back';
+                    if (digits.length > 1) {
+                        digits.pop();
+                        displayText.textContent = digits.join('');
+                        break;
+                    }
+                    else {
+                        digits.pop();
+                        displayText.textContent = '0';
+                    } 
+                    break;
             }
     }
     console.log(operator);
