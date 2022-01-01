@@ -24,13 +24,14 @@ function divideBtn(a, b) {
 }
 
 const displayText = document.querySelector('.display-text');
-let TOTAL = 0;
+let total = 0;
 let firstNum = 0;
 let secondNum = 0;
 let currentDigit = 0;
 let operator;
 
 displayText.textContent = 0;
+const digits = [];
 
 const squares = document.querySelectorAll('button');
 squares.forEach(square => {
@@ -46,9 +47,53 @@ function handleClick(e) {
     
     switch (e.target.classList.value) {
         case 'num-btn':
+            // add digit to number
+            digits.push(e.target.textContent);
+            console.log(digits); 
+            break;
+            // add digit to display
         case 'op-btn':
+            // set operator
+            switch(e.target.id) {
+                case 'add-btn':
+                    operator = 'addition';
+                    break;
+                case 'subtract-btn':
+                    operator = 'subtraction';
+                    break;
+                case 'multiply-btn':
+                    operator = 'multiplication';
+                    break;
+                case 'divide-btn':
+                    operator = 'division';
+                    break;
+                default:
+                    break;
+            }
+            // save current digit list to number variable .join()           
+            firstNum = digits.join('');
+            console.log(firstNum);
+            // reset digit list
+            digits.length = 0;
+            break;
+
+            // if there is already a first number
+            // save the digits to a second number variable
+
         case 'func-btn':
+            switch (e.target.id) {
+                case 'equals-btn':
+                case 'clear-btn':
+                    displayText.textContent = '0';
+                    firstNum = 0;
+                    secondNum = 0;
+                    digits.length = 0;
+                    operator = '';
+                    break;
+                case 'back-btn':
+            }
     }
+    console.log(operator);
 }
 
 function updateDisplay(text) {
