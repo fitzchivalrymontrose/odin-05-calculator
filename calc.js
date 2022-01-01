@@ -44,25 +44,10 @@ function handleClick(e) {
 
     updateDisplay(e.target.textContent);
     
-    switch (e.target.id) {
-        case '1-btn':
-        case '2-btn':
-        case '3-btn':
-        case '4-btn':
-        case '5-btn':
-        case '6-btn':
-        case '7-btn':
-        case '8-btn':
-        case '9-btn':
-        case '0-btn':
-        
-        case 'add-btn':
-        case 'subtract-btn':
-        case 'mutilply-btn':
-        case 'divid-btn':
-        
-        case 'equals-btn':
-        case 'clear-btn':
+    switch (e.target.classList.value) {
+        case 'num-btn':
+        case 'op-btn':
+        case 'func-btn':
     }
 }
 
