@@ -25,6 +25,16 @@ let lastButtonType = '';
 displayText.textContent = 0;
 const digits = [];
 
+function logAll() {
+    console.log(`operator: ${operator}`);
+    console.log(`firstNum: ${firstNum}`);
+    console.log(`secondNum: ${secondNum}`);
+    console.log(`digits: ${digits}`);
+    console.log(`lastButtonType: ${lastButtonType}`);
+    console.log(`total: ${total}`);
+
+}
+
 const squares = document.querySelectorAll('button');
 squares.forEach(square => {
     square.addEventListener('click', handleClick);
@@ -32,60 +42,66 @@ squares.forEach(square => {
 
 function handleClick(e) {
     
-    console.log(e.target.id);
-    console.log(e.target.classList.value);
+    logAll();
 
     
     
     switch (e.target.classList.value) {
         case 'num-btn':
-            updateDisplay(e.target.textContent);
+            if (lastButtonType === 'op') {
+                displayText.textContent = 0;
+                digits.length = 0;
+            }
             lastButtonType = 'numb';
+            updateDisplay(e.target.textContent);
             // add digit to number
             digits.push(e.target.textContent);
-            console.log(digits); 
+            logAll(); 
             break;
             // add digit to display
         case 'op-btn':
             lastButtonType = 'op';
             // set operator
-            switch(e.target.id) {
-                case 'add-btn':
-                    operator = 'addition';
-                    break;
-                case 'subtract-btn':
-                    operator = 'subtraction';
-                    break;
-                case 'multiply-btn':
-                    operator = 'multiplication';
-                    break;
-                case 'divide-btn':
-                    operator = 'division';
-                    break;
-                default:
-                    break;
+            if (operator == '') {
+                switch(e.target.id) {
+                    case 'add-btn':
+                        operator = 'addition';
+                        break;
+                    case 'subtract-btn':
+                        operator = 'subtraction';
+                        break;
+                    case 'multiply-btn':
+                        operator = 'multiplication';
+                        break;
+                    case 'divide-btn':
+                        operator = 'division';
+                        break;
+                    default:
+                        return;
+                }
             }
             // save current digit list to number variable .join()           
             if (firstNum == 0) {
                 firstNum = digits.join('');
-                console.log(firstNum, secondNum);
+                logAll();
             }
             else {
                 if (secondNum == 0) {
                     secondNum = digits.join('');
                     total = operate(operator, firstNum, secondNum);
+                    // operator = '';
                     displayText.textContent = total;
                     firstNum = total;
                     secondNum = 0;
-                    console.log(firstNum, secondNum);
-                }
+                    logAll();                }
                 else {
-                    total = operate(operator, firstNum, secondNum);
-                    displayText.textContent = total;
-                    firstNum = total;
-                    secondNum = 0;
-                    console.log(firstNum, secondNum, total);
 
+                    secondNum = digits.join('');
+                    // total = operate(operator, firstNum, secondNum);
+                    // displayText.textContent = total;
+                    firstNum = total;
+                    // secondNum = 0;
+                    logAll();
                 }
                 
 
@@ -102,11 +118,11 @@ function handleClick(e) {
             switch (e.target.id) {
                 case 'equals-btn':
                     lastButtonType = 'equal';
-
+                    secondNum = digits.join('')
                     // run operation with current numbers and operation
                     total = operate(operator, firstNum, secondNum);
                     displayText.textContent = total;
-                    console.log(firstNum, secondNum, total)
+                    logAll();                    
                     break;
                 case 'clear-btn':
                     lastButtonType = 'clear';
@@ -147,18 +163,22 @@ function operate(operator, a, b) {
     let sum;
     switch (operator) {
         case 'addition':
+            // operator = '';
             sum = addBtn(a, b);
             displayText.textContent = sum;
             return sum;
         case 'subtraction':
+            // operator = '';
             sum = subtractBtn(a, b);
             displayText.textContent = sum;
             return sum;
         case 'multiplication':
+            // operator = '';
             sum = multiplyBtn(a, b);
             displayText.textContent = sum;
             return sum;
         case 'division':
+            // operator = '';
             sum = divideBtn(a, b);
             displayText.textContent = sum;
             return sum;
