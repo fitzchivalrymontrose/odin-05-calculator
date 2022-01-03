@@ -1,7 +1,11 @@
 let currentOutput = '';
 let prevOutput = '';
+
 let currentOperand = '';
-let prevOperand = '';
+let secondOperand = '';
+let waitingForSecondOperand = false;
+// let prevOperand = '';
+
 let currentOperator = '';
 let prevOperator = '';
 
