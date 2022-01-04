@@ -6,11 +6,16 @@ let secondOperand = '';
 let waitingForSecondOperand = false;
 // let prevOperand = '';
 
+let lastButtonPressed = '';
+
 let currentOperator = '';
 let prevOperator = '';
 
 const currentOutputDisplay = document.querySelector('#output-current');
 const prevOutputDisplay = document.querySelector('#output-prev');
+
+currentOutputDisplay.textContent = '';
+prevOutputDisplay.textContent = '';
 
 const numBtns = document.querySelectorAll('.num-btn');
 const opBtns = document.querySelectorAll('.op-btn');
@@ -29,52 +34,88 @@ clearBtn.addEventListener('click', handleClearBtn);
 backBtn.addEventListener('click', handleBackBtn);
 
 function handleNumberBtn(e) {
-    console.log(e.target);
-    // add digit to currentOperand
-    
-    // update display
+    if (lastButtonPressed === 'equal') {
+        allClear();
+    }
+    if (waitingForSecondOperand === false) {
+        currentOperand += e.target.textContent;
+    }
+    else {
+        secondOperand += e.target.textContent; 
+    }
+    lastButtonPressed = 'num';
     updateDisplay();
 }
 
 function handleOperatorBtn(e) {
-    console.log(e.target);
-    currentOperator = e.target.textContent;
-    // update display
+    
+    lastButtonPressed = 'op';
+    if (secondOperand === '') {
+        waitingForSecondOperand = true;
+        currentOperator = e.target.textContent;
+    }
+    else {
+        currentOperand = operate(currentOperator, currentOperand, secondOperand);
+        waitingForSecondOperand = true;
+        secondOperand = '';
+        currentOperator = e.target.textContent;
+    }
+    updateDisplay();
+        // update display
     // complete previous operation, if there is one
     // set operator
     // update current and prevOperands
 }
 
 function handleEqualsBtn(e) {
-    console.log(e.target);
+    lastButtonPressed = 'equal';
+    if (currentOperator === '' || currentOperand === '' || secondOperand === '') {
+        return;
+    }
+    else if (lastButtonPressed === 'op') {
+        return;
+    }
+    else {
+        currentOperand = operate(currentOperator, currentOperand, secondOperand);
+        secondOperand = '';
+        currentOperator = '';
+        waitingForSecondOperand = false;
+        updateDisplay();
+    }
     // perform operation
     // update display
     // update current/prevOperants
 }
 
-function handleClearBtn(e) {
-    console.log(e.target);
+function handleClearBtn() {
+    allClear();
     // clear display
+
     // clear all variables
 }
 
 function handleBackBtn(e) {
-    console.log(e.target);
+
 }
 
 /////////////////////////////////////////////////////////
 function operate(operator, operand1, operand2) {
+    console.log(`Start: op1: ${operand1}, op2: ${operand2}, operator: ${operator}`);
     switch (operator) {
         case '+':
+            console.log(`End: op1: ${operand1}, op2: ${operand2}, operator: ${operator}`);
             return parseFloat(operand1) + parseFloat(operand2);
             break;
         case '-':
+            console.log(`End: op1: ${operand1}, op2: ${operand2}, operator: ${operator}`);
             return parseFloat(operand1) - parseFloat(operand2);
             break;
-        case '*':
-            return operparseFloat(operand1) * parseFloat(operand2);
+        case 'x':
+            console.log(`End: op1: ${operand1}, op2: ${operand2}, operator: ${operator}`);
+            return parseFloat(operand1) * parseFloat(operand2);
             break;
         case '/':
+            console.log(`End: op1: ${operand1}, op2: ${operand2}, operator: ${operator}`);
             return parseFloat(operand1) / parseFloat(operand2);
             break;
         default:
@@ -83,7 +124,19 @@ function operate(operator, operand1, operand2) {
 }
 
 function updateDisplay() {
-    currentOutputDisplay.textContent = currentOperand;
-    prevOutputDisplay.textContent = prevOperand;
+    if (waitingForSecondOperand === false) {
+        currentOutputDisplay.textContent = currentOperand;
+        prevOutputDisplay.textContent = secondOperand;
+    }
+    currentOutputDisplay.textContent = secondOperand;
+    prevOutputDisplay.textContent = currentOperand;
 }
 
+function allClear() {
+    currentOperand = '';
+    secondOperand = '';
+    waitingForSecondOperand = false;
+    lastButtonPressed = '';
+    currentOperator = '';
+    updateDisplay();
+}
