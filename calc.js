@@ -1,199 +1,126 @@
-function addBtn(a, b) {
-    return parseFloat(a) + parseFloat(b);
-}
+let currentOperand = '';
+let secondOperand = '';
+let waitingForSecondOperand = false;
 
-function subtractBtn(a, b) {
-    return parseFloat(a) - parseFloat(b);
-}
+let lastButtonPressed = '';
 
-function multiplyBtn(a, b) {
-    return parseFloat(a) * parseFloat(b);
-}
+let currentOperator = '';
 
-function divideBtn(a, b) {
-    return parseFloat(a) / parseFloat(b);
-}
+const currentOutputDisplay = document.querySelector('#output-current');
+const prevOutputDisplay = document.querySelector('#output-prev');
 
-const displayText = document.querySelector('.display-text');
-let total = 0;
-let firstNum = 0;
-let secondNum = 0;
-let currentDigit = 0;
-let operator = '';
-let lastButtonType = '';
+currentOutputDisplay.textContent = '';
+prevOutputDisplay.textContent = '';
 
-displayText.textContent = 0;
-const digits = [];
+const numBtns = document.querySelectorAll('.num-btn');
+const opBtns = document.querySelectorAll('.op-btn');
+const equalsBtn = document.querySelector('#equals-btn');
+const clearBtn = document.querySelector('#clear-btn');
+const backBtn = document.querySelector('#back-btn');
 
-function logAll() {
-    console.log(`operator: ${operator}`);
-    console.log(`firstNum: ${firstNum}`);
-    console.log(`secondNum: ${secondNum}`);
-    console.log(`digits: ${digits}`);
-    console.log(`lastButtonType: ${lastButtonType}`);
-    console.log(`total: ${total}`);
-
-}
-
-const squares = document.querySelectorAll('button');
-squares.forEach(square => {
-    square.addEventListener('click', handleClick);
+numBtns.forEach(num => {
+    num.addEventListener('click', handleNumberBtn);
 });
+opBtns.forEach(op => {
+    op.addEventListener('click', handleOperatorBtn);
+});
+equalsBtn.addEventListener('click', handleEqualsBtn);
+clearBtn.addEventListener('click', handleClearBtn);
+backBtn.addEventListener('click', handleBackBtn);
 
-function handleClick(e) {
-    
-    logAll();
-
-    
-    
-    switch (e.target.classList.value) {
-        case 'num-btn':
-            if (lastButtonType === 'op') {
-                displayText.textContent = 0;
-                digits.length = 0;
-            }
-            lastButtonType = 'numb';
-            updateDisplay(e.target.textContent);
-            // add digit to number
-            digits.push(e.target.textContent);
-            logAll(); 
-            break;
-            // add digit to display
-        case 'op-btn':
-            lastButtonType = 'op';
-            // set operator
-            if (operator == '') {
-                switch(e.target.id) {
-                    case 'add-btn':
-                        operator = 'addition';
-                        break;
-                    case 'subtract-btn':
-                        operator = 'subtraction';
-                        break;
-                    case 'multiply-btn':
-                        operator = 'multiplication';
-                        break;
-                    case 'divide-btn':
-                        operator = 'division';
-                        break;
-                    default:
-                        return;
-                }
-            }
-            // save current digit list to number variable .join()           
-            if (firstNum == 0) {
-                firstNum = digits.join('');
-                logAll();
-            }
-            else {
-                if (secondNum == 0) {
-                    secondNum = digits.join('');
-                    total = operate(operator, firstNum, secondNum);
-                    // operator = '';
-                    displayText.textContent = total;
-                    firstNum = total;
-                    secondNum = 0;
-                    logAll();                }
-                else {
-
-                    secondNum = digits.join('');
-                    // total = operate(operator, firstNum, secondNum);
-                    // displayText.textContent = total;
-                    firstNum = total;
-                    // secondNum = 0;
-                    logAll();
-                }
-                
-
-            }
-            
-            // reset digit list
-            digits.length = 0;
-            break;
-
-            // if there is already a first number
-            // save the digits to a second number variable
-
-        case 'func-btn':
-            switch (e.target.id) {
-                case 'equals-btn':
-                    lastButtonType = 'equal';
-                    secondNum = digits.join('')
-                    // run operation with current numbers and operation
-                    total = operate(operator, firstNum, secondNum);
-                    displayText.textContent = total;
-                    logAll();                    
-                    break;
-                case 'clear-btn':
-                    lastButtonType = 'clear';
-                    displayText.textContent = '0';
-                    firstNum = 0;
-                    secondNum = 0;
-                    digits.length = 0;
-                    operator = '';
-                    break;
-                case 'back-btn':
-                    lastButtonType = 'back';
-                    if (digits.length > 1) {
-                        digits.pop();
-                        displayText.textContent = digits.join('');
-                        break;
-                    }
-                    else {
-                        digits.pop();
-                        displayText.textContent = '0';
-                    } 
-                    break;
-            }
+function handleNumberBtn(e) {
+    if (lastButtonPressed === 'equal') {
+        allClear();
     }
-    console.log(operator);
-}
-
-function updateDisplay(text) {
-    if (displayText.textContent == 0) {
-        displayText.textContent = text;
+    if (waitingForSecondOperand === false) {
+        currentOperand += e.target.textContent;
     }
     else {
-        displayText.textContent += text;
+        secondOperand += e.target.textContent; 
+    }
+    lastButtonPressed = 'num';
+    updateDisplay();
+}
+
+function handleOperatorBtn(e) {
+    lastButtonPressed = 'op';
+    if (secondOperand === '') {
+        waitingForSecondOperand = true;
+        currentOperator = e.target.textContent;
+    }
+    else {
+        currentOperand = operate(currentOperator, currentOperand, secondOperand);
+        waitingForSecondOperand = true;
+        secondOperand = '';
+        currentOperator = e.target.textContent;
+    }
+    updateDisplay();
+}
+
+function handleEqualsBtn(e) {
+    lastButtonPressed = 'equal';
+    if (currentOperator === '' || currentOperand === '' || secondOperand === '') {
+        return;
+    }
+    else if (lastButtonPressed === 'op') {
+        return;
+    }
+    else {
+        currentOperand = operate(currentOperator, currentOperand, secondOperand);
+        secondOperand = '';
+        currentOperator = '';
+        waitingForSecondOperand = false;
+        updateDisplay();
     }
 }
 
-function operate(operator, a, b) {
-    // choose operator function
-    let sum;
+function handleClearBtn() {
+    allClear();
+}
+
+function handleBackBtn(e) {
+
+}
+
+/////////////////////////////////////////////////////////
+function operate(operator, operand1, operand2) {
+    console.log(`Start: op1: ${operand1}, op2: ${operand2}, operator: ${operator}`);
     switch (operator) {
-        case 'addition':
-            // operator = '';
-            sum = addBtn(a, b);
-            displayText.textContent = sum;
-            return sum;
-        case 'subtraction':
-            // operator = '';
-            sum = subtractBtn(a, b);
-            displayText.textContent = sum;
-            return sum;
-        case 'multiplication':
-            // operator = '';
-            sum = multiplyBtn(a, b);
-            displayText.textContent = sum;
-            return sum;
-        case 'division':
-            // operator = '';
-            sum = divideBtn(a, b);
-            displayText.textContent = sum;
-            return sum;
+        case '+':
+            console.log(`End: op1: ${operand1}, op2: ${operand2}, operator: ${operator}`);
+            return parseFloat(operand1) + parseFloat(operand2);
+            break;
+        case '-':
+            console.log(`End: op1: ${operand1}, op2: ${operand2}, operator: ${operator}`);
+            return parseFloat(operand1) - parseFloat(operand2);
+            break;
+        case 'x':
+            console.log(`End: op1: ${operand1}, op2: ${operand2}, operator: ${operator}`);
+            return parseFloat(operand1) * parseFloat(operand2);
+            break;
+        case '/':
+            console.log(`End: op1: ${operand1}, op2: ${operand2}, operator: ${operator}`);
+            return parseFloat(operand1) / parseFloat(operand2);
+            break;
+        default:
+            break;
     }
-    // pass a and b to said function
-    // return result
-
-    // chain result into new operation if more inputs are made
-    // keep open somehow listening for more, after displaying result
-
-    // do operation, display result, if more input, use result as
-    // first of two arguments of the next operation,
-    // do the same thing again, operate, display, update? running total
 }
 
-function clearBtn() {
+function updateDisplay() {
+    if (waitingForSecondOperand === false) {
+        currentOutputDisplay.textContent = currentOperand;
+        prevOutputDisplay.textContent = secondOperand;
+    }
+    currentOutputDisplay.textContent = secondOperand;
+    prevOutputDisplay.textContent = currentOperand;
+}
 
+function allClear() {
+    currentOperand = '';
+    secondOperand = '';
+    waitingForSecondOperand = false;
+    lastButtonPressed = '';
+    currentOperator = '';
+    updateDisplay();
 }
