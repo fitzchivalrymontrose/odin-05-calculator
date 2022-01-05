@@ -1,14 +1,12 @@
 let currentOperand = '';
 let secondOperand = '';
 let waitingForSecondOperand = false;
-
 let lastButtonPressed = '';
-
 let currentOperator = '';
+let addingTo = '';
 
 const currentOutputDisplay = document.querySelector('#output-current');
 const prevOutputDisplay = document.querySelector('#output-prev');
-
 currentOutputDisplay.textContent = '';
 prevOutputDisplay.textContent = '';
 
@@ -27,8 +25,6 @@ opBtns.forEach(op => {
 equalsBtn.addEventListener('click', handleEqualsBtn);
 clearBtn.addEventListener('click', handleClearBtn);
 backBtn.addEventListener('click', handleBackBtn);
-
-let addingTo = '';
 
 function handleNumberBtn(e) {
     if (lastButtonPressed === 'equal') {
@@ -67,7 +63,6 @@ function handleNumberBtn(e) {
     lastButtonPressed = 'num';
     updateDisplay();
 }
-
 function handleOperatorBtn(e) {
     lastButtonPressed = 'op';
     if (secondOperand === '') {
@@ -82,7 +77,6 @@ function handleOperatorBtn(e) {
     }
     updateDisplay();
 }
-
 function handleEqualsBtn(e) {
     lastButtonPressed = 'equal';
     if (currentOperator === '' || currentOperand === '' || secondOperand === '') {
@@ -99,16 +93,13 @@ function handleEqualsBtn(e) {
         updateDisplay();
     }
 }
-
 function handleClearBtn() {
     allClear();
 }
-
 function handleBackBtn(e) {
     removeDigit();
     updateDisplay();
 }
-
 /////////////////////////////////////////////////////////
 function operate(operator, operand1, operand2) {
     console.log(`Start: op1: ${operand1}, op2: ${operand2}, operator: ${operator} lbp: ${lastButtonPressed}`);
@@ -131,15 +122,12 @@ function operate(operator, operand1, operand2) {
             else {
                 return parseFloat(operand1) / parseFloat(operand2);
                 break;
-            };
-            
+            };    
         default:
             break;
     }
     console.log(`End: op1: ${operand1}, op2: ${operand2}, operator: ${operator} lbp: ${lastButtonPressed}`);
-
 }
-
 function updateDisplay() {
     if (waitingForSecondOperand === false) {
         currentOutputDisplay.textContent = currentOperand;
@@ -148,7 +136,6 @@ function updateDisplay() {
     currentOutputDisplay.textContent = secondOperand;
     prevOutputDisplay.textContent = currentOperand;
 }
-
 function allClear() {
     currentOperand = '';
     secondOperand = '';
@@ -157,7 +144,6 @@ function allClear() {
     currentOperator = '';
     updateDisplay();
 }
-
 function removeDigit() {
     if (addingTo === 'current') {
         currentOperand = currentOperand.slice(0, -1);
