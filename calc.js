@@ -84,27 +84,33 @@ function handleBackBtn(e) {
 
 /////////////////////////////////////////////////////////
 function operate(operator, operand1, operand2) {
-    console.log(`Start: op1: ${operand1}, op2: ${operand2}, operator: ${operator}`);
+    console.log(`Start: op1: ${operand1}, op2: ${operand2}, operator: ${operator} lbp: ${lastButtonPressed}`);
     switch (operator) {
         case '+':
-            console.log(`End: op1: ${operand1}, op2: ${operand2}, operator: ${operator}`);
             return parseFloat(operand1) + parseFloat(operand2);
             break;
         case '-':
-            console.log(`End: op1: ${operand1}, op2: ${operand2}, operator: ${operator}`);
             return parseFloat(operand1) - parseFloat(operand2);
             break;
         case 'x':
-            console.log(`End: op1: ${operand1}, op2: ${operand2}, operator: ${operator}`);
             return parseFloat(operand1) * parseFloat(operand2);
             break;
         case '/':
-            console.log(`End: op1: ${operand1}, op2: ${operand2}, operator: ${operator}`);
-            return parseFloat(operand1) / parseFloat(operand2);
-            break;
+            if (operand2 === '0') {
+                alert(`it doesn't do that divide by 0 thing`);
+                lastButtonPressed = 'equal';
+                break;
+            }
+            else {
+                return parseFloat(operand1) / parseFloat(operand2);
+                break;
+            };
+            
         default:
             break;
     }
+    console.log(`End: op1: ${operand1}, op2: ${operand2}, operator: ${operator} lbp: ${lastButtonPressed}`);
+
 }
 
 function updateDisplay() {
