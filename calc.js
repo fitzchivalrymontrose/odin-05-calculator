@@ -28,15 +28,19 @@ equalsBtn.addEventListener('click', handleEqualsBtn);
 clearBtn.addEventListener('click', handleClearBtn);
 backBtn.addEventListener('click', handleBackBtn);
 
+let addingTo = '';
+
 function handleNumberBtn(e) {
     if (lastButtonPressed === 'equal') {
         allClear();
     }
     if (waitingForSecondOperand === false) {
         currentOperand += e.target.textContent;
+        addingTo = 'current';
     }
     else {
         secondOperand += e.target.textContent; 
+        addingTo = 'second';
     }
     lastButtonPressed = 'num';
     updateDisplay();
@@ -79,7 +83,8 @@ function handleClearBtn() {
 }
 
 function handleBackBtn(e) {
-
+    removeDigit();
+    updateDisplay();
 }
 
 /////////////////////////////////////////////////////////
@@ -129,4 +134,13 @@ function allClear() {
     lastButtonPressed = '';
     currentOperator = '';
     updateDisplay();
+}
+
+function removeDigit() {
+    if (addingTo === 'current') {
+        currentOperand = currentOperand.slice(0, -1);
+    }
+    else if (addingTo === 'second') {
+        secondOperand = secondOperand.slice(0, -1);
+    }
 }
