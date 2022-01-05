@@ -35,12 +35,34 @@ function handleNumberBtn(e) {
         allClear();
     }
     if (waitingForSecondOperand === false) {
-        currentOperand += e.target.textContent;
-        addingTo = 'current';
+        if (e.target.textContent === '.') {
+            if (currentOperand.includes('.')) {
+                return;
+            }
+            else {
+                currentOperand += '.';
+                addingTo = 'current';
+            }
+        }
+        else {        
+            currentOperand += e.target.textContent;
+            addingTo = 'current';
+        }
     }
     else {
-        secondOperand += e.target.textContent; 
-        addingTo = 'second';
+        if (e.target.textContent === '.') {
+            if (secondOperand.includes('.')) {
+                return;
+            }
+            else {
+                secondOperand += '.';
+                addingTo = 'current';
+            }
+        }
+        else {        
+            secondOperand += e.target.textContent;
+            addingTo = 'second';
+        }
     }
     lastButtonPressed = 'num';
     updateDisplay();
