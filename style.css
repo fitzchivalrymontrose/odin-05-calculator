@@ -38,18 +38,17 @@ header p {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    /* border: 2px solid red; */
     width: 100vw;
     height: 100vh;
-    outline: 2px solid red;
+    /* outline: 2px solid red; */
 }
 
 .calculator {
     display: flex;
     flex-direction: column;
-    justify-content: stretch;
+    
     align-items: center;
-    height: 80%;
+    height: 100%;
     width: 70%;
     background-color: lightslategray;
     border: 2px solid slateblue;
@@ -60,7 +59,8 @@ header p {
 
 .display {
     width: 95%;
-    height: 30%;
+    height: 150px;
+    flex-shrink: 0;
     background-color: black;
     border-radius: 10px;
     border: 2px solid darkslateblue;
@@ -73,9 +73,13 @@ header p {
 }
 
 .display p {
-    color: chartreuse;
+    color: rgb(152, 252, 52);
     padding: .3em;
     font-size: 30px;
+}
+
+#output-prev {
+    color: rgba(152,252,52, .7);
 }
 
 .buttons {
