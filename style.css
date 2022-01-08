@@ -37,10 +37,11 @@ header p {
 .main-container {
     display: flex;
     justify-content: center;
-    align-items: stretch;
+    align-items: flex-start;
     /* border: 2px solid red; */
-    min-width: 600px;
-    height: 75vh;
+    width: 100vw;
+    height: 100vh;
+    outline: 2px solid red;
 }
 
 .calculator {
@@ -48,7 +49,7 @@ header p {
     flex-direction: column;
     justify-content: stretch;
     align-items: center;
-    
+    height: 80%;
     width: 70%;
     background-color: lightslategray;
     border: 2px solid slateblue;
@@ -109,9 +110,17 @@ button:hover {
     font-size: 24px;
 }
 
-.op-btn,
-.func-btn {
+#equals-btn,
+#clear-btn {
+    width: 180px;
+}
+
+.op-btn {
     background-color: indianred;
+}
+
+.func-btn {
+    background-color: chocolate;
 }
 
 .numpad {
