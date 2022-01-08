@@ -7,8 +7,10 @@ let addingTo = '';
 
 const currentOutputDisplay = document.querySelector('#output-current');
 const prevOutputDisplay = document.querySelector('#output-prev');
+const operatorDisplay = document.querySelector('#output-operator');
 currentOutputDisplay.textContent = '';
 prevOutputDisplay.textContent = '';
+operatorDisplay.textContent = '';
 
 const numBtns = document.querySelectorAll('.num-btn');
 const opBtns = document.querySelectorAll('.op-btn');
@@ -65,6 +67,7 @@ function handleNumberBtn(e) {
 }
 function handleOperatorBtn(e) {
     lastButtonPressed = 'op';
+    operatorDisplay.textContent = e.target.textContent;
     if (secondOperand === '') {
         waitingForSecondOperand = true;
         currentOperator = e.target.textContent;
@@ -89,6 +92,7 @@ function handleEqualsBtn(e) {
         currentOperand = operate(currentOperator, currentOperand, secondOperand);
         secondOperand = '';
         currentOperator = '';
+        operatorDisplay.textContent = '';
         waitingForSecondOperand = false;
         updateDisplay();
     }
@@ -143,6 +147,7 @@ function allClear() {
     lastButtonPressed = '';
     currentOperator = '';
     updateDisplay();
+    operatorDisplay.textContent = '';
 }
 function removeDigit() {
     if (addingTo === 'current') {
